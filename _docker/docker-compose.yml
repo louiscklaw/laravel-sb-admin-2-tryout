@@ -1,0 +1,27 @@
+# ./docker-compose.yml
+
+version: '3'
+
+services:
+  web:
+    image: logickee/lamp-php7:latest
+    # build: ./laravel-php7
+    container_name: laravel-sb-admin2-tryout
+    volumes:
+      - ../app/:/app
+    ports:
+      - "8005:8000"
+
+    restart: always
+    networks:
+        - proxy
+    labels:
+        - "traefik.docker.network=proxy"
+        - "traefik.enable=true"
+        - "traefik.basic.frontend.rule=Host:temp.louislabs.com"
+        - "traefik.basic.port=80"
+        - "traefik.basic.protocol=http"
+
+networks:
+  proxy:
+    external: true
